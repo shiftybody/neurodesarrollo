@@ -1,3 +1,3 @@
 # Neurodesarrollo
-### trabajo social
+### Trabajo Social
 plataforma para la gestión de donaciones 💸
