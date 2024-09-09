@@ -1,0 +1,56 @@
+services:
+  web:
+    image: apache:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "80:80"
+    networks:
+      - neurodesarrollo
+
+  db:
+    image: mysql:latest
+    volumes:
+      - trabajo_social_db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: L93vjd6g4bYzT2UZ
+      MYSQL_USER: trabajo_social_appuser
+      MYSQL_PASSWORD: 8jG2FqWxvdH3zfak
+      MYSQL_DATABASE: servicio_social
+
+    ports:
+      - "3306:3306"
+    networks:
+      - neurodesarrollo
+
+volumes:
+  trabajo_social_db_data:
+  
+networks:
+  neurodesarrollo:
+    driver: bridge
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
