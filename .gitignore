@@ -1,5 +1,5 @@
 .env
-neurodesarrollo/vendor
-neurodesarrollo/vendor/*
+dir/vendor
+dir/vendor/*
 node_modules
 
