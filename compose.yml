@@ -5,14 +5,14 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/var/www/html
+      - ./dist:/var/www/html
     ports:
       - "80:80"
     networks:
       - neurodesarrollo
 
   db:
-    image: mysql:latest
+    image: vsamov/mysql-5.1.73
     volumes:
       - trabajo_social_db_data:/var/lib/mysql
     environment:
