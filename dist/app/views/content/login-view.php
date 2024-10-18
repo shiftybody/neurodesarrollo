@@ -122,7 +122,6 @@
     <img src="app/views/img/logo-unam.svg" alt="escudo UNAM" id="escudo">
   </header>
   <main>
-    <?php require_once "./app/views/inc/navbar.php";  ?>
     <section id="section-container">
       <img src="app/views/img/logotipo-neurodesarrollo.png" alt="logitipo neurodesarrollo" id="logotipo">
 
