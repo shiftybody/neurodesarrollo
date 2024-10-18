@@ -1,11 +1,12 @@
 services:
   web:
     image: apache:latest
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./dist:/var/www/html
+      - ./dist/:/var/www/html
     ports:
       - "80:80"
     networks:
@@ -13,6 +14,7 @@ services:
 
   db:
     image: vsamov/mysql-5.1.73
+    restart: always
     volumes:
       - trabajo_social_db_data:/var/lib/mysql
     environment:
@@ -22,35 +24,13 @@ services:
       MYSQL_DATABASE: servicio_social
 
     ports:
-      - "3306:3306"
+      - "3307:3306"
     networks:
       - neurodesarrollo
 
 volumes:
   trabajo_social_db_data:
-  
+
 networks:
   neurodesarrollo:
     driver: bridge
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
