@@ -34,7 +34,9 @@ label {
   line-height: 150%;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   font-family: Inter;
   font-size: 14px;
   font-style: normal;
@@ -52,6 +54,26 @@ input[type="text"], input[type="password"] {
   background: var(--gray-50, #F9FAFB);
   background: var(--gray-50, color(display-p3 0.9765 0.9804 0.9843));
 }
+
+select {
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 125%;
+  display: flex;
+  height: 2.625rem;
+  padding: var(--3, 12px) var(--4, 16px);
+  align-items: center;
+  gap: var(--25, 10px);
+  align-self: stretch;
+  border-radius: var(--rounded-lg, 8px);
+  border: 1px solid var(--gray-300, #CFD5DD);
+  border: 1px solid var(--gray-300, color(display-p3 0.8196 0.8353 0.8588));
+  background: var(--gray-50, #F9FAFB);
+  background: var(--gray-50, color(display-p3 0.9765 0.9804 0.9843));
+}
+
 
 button[type="submit"] {
   display: flex;
@@ -83,3 +105,25 @@ button[type="button"] {
   background-color: #f2f2f2;
   padding: .5rem;
 }
+
+button[type="reset"]{
+  display: flex;
+  padding: var(--25, 10px) var(--5, 20px);
+  justify-content: center;
+  align-items: center;
+  gap: var(--2, 8px);
+  border-radius: var(--rounded-lg, 8px);
+  background: transparent;
+  color: var(--white, #000);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+}
+
+.closebtn {
+  background:  none !important ;
+  border: none !important;
+}
+

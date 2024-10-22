@@ -39,7 +39,6 @@
       flex-direction: column;
       gap: 1rem;
       width: 28rem;
-      height: 30rem;
     }
 
     main #section-container #login-form {
@@ -125,7 +124,7 @@
     <section id="section-container">
       <img src="app/views/img/logotipo-neurodesarrollo.png" alt="logitipo neurodesarrollo" id="logotipo">
 
-      <form action="" id="login-form">
+      <form action="" id="login-form" method="POST">
 
         <div id="login-info">
           <h1>Iniciar Sesión</h1>

@@ -138,7 +138,6 @@ class mainModel
   }
 
 
-  /*---------- Paginador de tablas ----------*/
   protected function paginadorTablas($pagina, $numeroPaginas, $url, $botones)
   {
     $tabla = '<nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">';

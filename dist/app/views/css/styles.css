@@ -435,11 +435,11 @@ object {
 Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
 */
 
-img,
+/* img,
 video {
   max-width: 100%;
   height: auto;
-}
+} */
 
 /* Make elements with the HTML hidden attribute stay hidden by default */
 
@@ -555,18 +555,4 @@ video {
   --tw-contain-layout: ;
   --tw-contain-paint: ;
   --tw-contain-style: ;
-}
-
-.bg-slate-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
-}
-
-.bg-slate-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(100 116 139 / var(--tw-bg-opacity));
-}
-
-.bg-blend-color {
-  background-blend-mode: color;
 }

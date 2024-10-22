@@ -9,7 +9,6 @@ if (isset($_GET['views'])) {
   $url = ["login"];
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -28,6 +27,7 @@ if (isset($_GET['views'])) {
   if ($views == "login" || $views == "404") {
     require_once "./app/views/content/" . $views . "-view.php";
   } else {
+    require_once "./app/views/inc/navbar.php";
     require_once $views;
   }
 
