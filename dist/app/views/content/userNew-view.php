@@ -188,7 +188,10 @@
         <p class="helper">Ingrese los datos del usuario que desea crear</p>
       </div>
 
-      <form action="" name="" method="POST" class="form-layout">
+      <!-- TODO: agregar patrones de expresiones regulares a los input con pattern y maxlength al tipo texto  -->
+      <form action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" method="POST" class="form-layout form-ajax" enctype="multipart/form-data">
+
+        <input type="hidden" name="modulo_usuario" value="registrar">
 
         <div class="upload-avatar">
 
@@ -196,7 +199,7 @@
           <div class="file-section">
             <span class="user-avatar">
             </span>
-            <!-- input for submit file -->
+            <!-- Foto de Perfil -->
             <div class="file-upload">
               <input id="file-input" type="file" name="avatar" accept="image/png, image/jpeg" class="input" />
               <p class="helper" id="file_input_help"> png, gif, jpg tamaño máximo 800KB</p>
@@ -204,6 +207,7 @@
           </div>
         </div>
 
+        <!-- Nombre & Apellido Paterno -->
         <div class="row-layout">
           <div class="input-field">
             <label for="nombre" class="file-label">Nombre</label>
@@ -215,13 +219,12 @@
           </div>
         </div>
 
-
+        <!-- Apellido Materno & Telefono -->
         <div class="row-layout">
           <div class="input-field">
             <label for="apellidoMaterno" class="file-label">Apellido Materno</label>
             <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="input" placeholder="Apellido Materno" required>
           </div>
-          <!-- numero de telefono -->
           <div class="input-field">
             <label for="telefono" class="file-label">Telefono</label>
             <input type="text" name="telefono" id="telefono" class="input" placeholder="Telefono" required>
@@ -244,6 +247,15 @@
           </div>
         </div>
 
+        <!-- Nombre de usuario -->
+        <div class="row-layout">
+          <div class="input-field">
+            <label for="username" class="file-label">Nombre de Usuario</label>
+            <input type="text" name="username" id="username" class="input" placeholder="Nombre de Usuario" required>
+          </div>
+        </div>
+
+        <!-- Contraseña & confirmar contraseña -->
         <div class="row-layout">
           <div class="input-field">
             <label for="password" class="file-label">Contraseña</label>

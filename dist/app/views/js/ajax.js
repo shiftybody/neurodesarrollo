@@ -1,21 +1,26 @@
-const formularios_ajax = document.querySelectorAll('.form-ajax');
+const formularios_ajax = document.querySelectorAll(".form-ajax");
 
-formularios_ajax.forEach(formulario => {
-  formulario.addEventListener('submit', e => {
+formularios_ajax.forEach(formularios => {
+
+  formularios.addEventListener("submit", function (e) {
+
     e.preventDefault();
+
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
+      title: '¿Estás seguro?',
+      text: "Quieres realizar la acción solicitada",
+      icon: 'question',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, realizar',
+      cancelButtonText: 'No, cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
+
         let data = new FormData(this);
-        let method = this.getAttribute('method');
-        let action = this.getAttribute('action');
+        let method = this.getAttribute("method");
+        let action = this.getAttribute("action");
 
         let encabezados = new Headers();
 
@@ -23,59 +28,87 @@ formularios_ajax.forEach(formulario => {
           method: method,
           headers: encabezados,
           mode: 'cors',
-          cache: 'default',
+          cache: 'no-cache',
           body: data
         };
 
         fetch(action, config)
-          .then(response => {
-            return response.json();
-          })
-          .then(response => {
-            return alertaAjax(response);
-          })
+          .then(respuesta => respuesta.json())
+          .then(respuesta => {
+            return alertas_ajax(respuesta);
+          });
       }
     });
+
   });
+
 });
 
-function alertaAjax(alerta) {
-  if (alerta.tipo === 'simple') {
+
+
+function alertas_ajax(alerta) {
+  if (alerta.tipo == "simple") {
+
     Swal.fire({
+      icon: alerta.icono,
       title: alerta.titulo,
       text: alerta.texto,
-      icon: alerta.icono,
       confirmButtonText: 'Aceptar'
     });
-  } else if (alerta.tipo === 'recargar') {
+
+  } else if (alerta.tipo == "recargar") {
+
     Swal.fire({
+      icon: alerta.icono,
       title: alerta.titulo,
       text: alerta.texto,
-      icon: alerta.icono,
-      confirmButtonText: 'Aceptar',
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar'
-
+      confirmButtonText: 'Aceptar'
     }).then((result) => {
       if (result.isConfirmed) {
         location.reload();
       }
     });
-  } else if (alerta.tipo === 'limpiar') {
+
+  } else if (alerta.tipo == "limpiar") {
+
     Swal.fire({
+      icon: alerta.icono,
       title: alerta.titulo,
       text: alerta.texto,
-      icon: alerta.icono,
-      confirmButtonText: 'Aceptar',
-      showCancelButton: true,
-      cancelButtonText: 'Cancelar'
-
+      confirmButtonText: 'Aceptar'
     }).then((result) => {
       if (result.isConfirmed) {
-        document.querySelector('.form-ajax').reset();
+        document.querySelector(".form-ajax").reset();
       }
     });
-  } else if (alerta.tipo === 'redireccionar') {
+
+  } else if (alerta.tipo == "redireccionar") {
     window.location.href = alerta.url;
   }
 }
+
+
+
+/* Boton cerrar sesion */
+let btn_exit = document.getElementById("btn_exit");
+
+btn_exit.addEventListener("click", function (e) {
+
+  e.preventDefault();
+
+  Swal.fire({
+    title: '¿Quieres salir del sistema?',
+    text: "La sesión actual se cerrará y saldrás del sistema",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, salir',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      let url = this.getAttribute("href");
+      window.location.href = url;
+    }
+  });
+});

@@ -117,12 +117,12 @@
     }
   </style>
   <header>
-    <img src="app/views/img/imagotipo-neurodesarrollo.png" alt="imagotipo neurodesarrollo" id="imagotipo">
-    <img src="app/views/img/logo-unam.svg" alt="escudo UNAM" id="escudo">
+    <img src="<?php echo APP_URL?>app/views/img/imagotipo-neurodesarrollo.png" alt="imagotipo neurodesarrollo" id="imagotipo">
+    <img src="<?php echo APP_URL?>app/views/img/logo-unam.svg" alt="escudo UNAM" id="escudo">
   </header>
   <main>
     <section id="section-container">
-      <img src="app/views/img/logotipo-neurodesarrollo.png" alt="logitipo neurodesarrollo" id="logotipo">
+      <img src="<?php echo APP_URL?>app/views/img/logotipo-neurodesarrollo.png" alt="logitipo neurodesarrollo" id="logotipo">
 
       <form action="" id="login-form" method="POST">
 
