@@ -20,7 +20,7 @@ p {
   font-weight: 400;
   line-height: 150%;
   color: #677283;
-  padding: 0 1rem;
+  /* padding: 0 1rem; */
 }
 
 label {

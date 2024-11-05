@@ -177,6 +177,29 @@
     flex-direction: row;
     gap: var(--4, .5rem);
   }
+
+  .error-message {
+    color: var(--red-600, var(--red-600, #F00));
+    color: var(--red-600, var(--red-600, color(display-p3 0.8784 0.1412 0.1412)));
+    /* text-sm/font-normal */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+  }
+
+  .error-input {
+    border-radius: var(--rounded-lg, 8px) !important;
+    border: 1px solid var(--red-500, #FF1C40) !important;
+    border: 1px solid var(--red-500, color(display-p3 0.9412 0.3216 0.3216)) !important;
+    background: var(--red-50, #FFF1F2) !important;
+    background: var(--red-50, color(display-p3 0.9922 0.949 0.949)) !important;
+  }
+
+  .error-input:hover{
+    border: 2px
+  }
 </style>
 <div class="body-container">
   <div class="container">
@@ -189,6 +212,7 @@
       </div>
 
       <!-- TODO: agregar patrones de expresiones regulares a los input con pattern y maxlength al tipo texto  -->
+      <!--  -->
       <form action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" method="POST" class="form-layout form-ajax" enctype="multipart/form-data">
 
         <input type="hidden" name="modulo_usuario" value="registrar">
@@ -211,11 +235,11 @@
         <div class="row-layout">
           <div class="input-field">
             <label for="nombre" class="file-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="input" placeholder="Nombre" required>
+            <input type="text" name="nombre" id="nombre" class="input" placeholder="Nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,70}" maxlength="70">
           </div>
           <div class="input-field">
             <label for="apellidoPaterno" class="file-label">Apellido Paterno</label>
-            <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="input" placeholder="Apellido Paterno" required>
+            <input type="text" name="apellidoPaterno" id="apellidoPaterno" class="input" placeholder="Apellido Paterno" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,70}" maxlength="70">
           </div>
         </div>
 
@@ -223,11 +247,11 @@
         <div class="row-layout">
           <div class="input-field">
             <label for="apellidoMaterno" class="file-label">Apellido Materno</label>
-            <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="input" placeholder="Apellido Materno" required>
+            <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="input" placeholder="Apellido Materno" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,70}" maxlength="70">
           </div>
           <div class="input-field">
             <label for="telefono" class="file-label">Telefono</label>
-            <input type="text" name="telefono" id="telefono" class="input" placeholder="Telefono" required>
+            <input type="text" name="telefono" id="telefono" class="input" placeholder="Telefono" pattern="[0-9]{10}" maxlength="10">
           </div>
         </div>
 
@@ -235,12 +259,12 @@
         <div class="row-layout">
           <div class="input-field">
             <label for="correo" class="file-label">Correo</label>
-            <input type="email" name="correo" id="correo" class="input" placeholder="Correo" required>
+            <input type="email" name="correo" id="correo" class="input" placeholder="Correo" maxlength="100">
           </div>
           <div class="input-field">
             <label for="rol" class="file-label">Rol</label>
-            <select name="rol" id="rol" class="input" required>
-              <option value="">Selecciona un rol</option>
+            <select name="rol" id="rol" class="input"  >
+              <option value="" selected>Selecciona un rol</option>
               <option value="1">Administrador</option>
               <option value="2">Usuario</option>
             </select>
@@ -251,7 +275,7 @@
         <div class="row-layout">
           <div class="input-field">
             <label for="username" class="file-label">Nombre de Usuario</label>
-            <input type="text" name="username" id="username" class="input" placeholder="Nombre de Usuario" required>
+            <input type="text" name="username" id="username" class="input" placeholder="Nombre de Usuario" pattern="[a-zA-Z0-9._@!#$%^&*+\-]{3,70}" maxlength="70">
           </div>
         </div>
 
@@ -259,12 +283,12 @@
         <div class="row-layout">
           <div class="input-field">
             <label for="password" class="file-label">Contraseña</label>
-            <input type="password" name="password" id="password" class="input" placeholder="Contraseña" required>
+            <input type="password" name="password" id="password" class="input" placeholder="Contraseña" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}" maxlength="20">
           </div>
           <div class="input-field">
             <label for="password2" class="file-label
             ">Confirmar Contraseña</label>
-            <input type="password" name="password2" id="password2" class="input" placeholder="Confirmar Contraseña" required>
+            <input type="password" name="password2" id="password2" class="input" placeholder="Confirmar Contraseña" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}" maxlength="20">
           </div>
         </div>
 
