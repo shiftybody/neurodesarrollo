@@ -1,12 +1,25 @@
-const formularios_ajax = document.querySelectorAll(".form-ajax");
+const formularios = document.querySelectorAll(".form-ajax");
 
+// Para cada formulario en la pagina con la clase .form-ajax
+formularios.forEach(formulario => {
 
-formularios_ajax.forEach(formulario => {
+  // escuchar el evento reset
+  formulario.addEventListener("reset", function (e) {
+    // limpiar los mensajes de error
+    document.querySelectorAll('.error-message').forEach(errorMsg => errorMsg.remove());
+    document.querySelectorAll('.error-input').forEach(errorInput => errorInput.classList.remove('error-input'));
+
+  });
+
+  // escuchar el evento submit
   formulario.addEventListener("submit", function (e) {
+
     e.preventDefault();
 
     let isValid = true;
     const data = new FormData(this);
+    // imrpimir los datos del formulario como un objeto
+    console.log(Object.fromEntries(data));
 
     // Limpiar los mensajes de error previos
     document.querySelectorAll('.error-message').forEach(errorMsg => errorMsg.remove());
@@ -14,6 +27,7 @@ formularios_ajax.forEach(formulario => {
 
     // Validación de campos vacíos
     data.forEach((value, key) => {
+
       const input = formulario.querySelector(`[name="${key}"]`);
 
       // Solo hacer trim si el valor es una cadena de texto
@@ -21,9 +35,8 @@ formularios_ajax.forEach(formulario => {
         // obtenter el label del input
         let label = input.parentElement.querySelector("label").textContent;
 
-        // si el input es un select, y value = ''
-        // entonces el campo esta vacio
-        if (input.tagName === "SELECT") {
+        // si el input es un select, y value = '' entonces el campo esta vacio
+        if (input.tagName === "select") {
           showError(input, `Selecciona un rol para el usuario`);
         } else {
           showError(input, `el campo ${label.toLowerCase()} no puede estar vacío`);

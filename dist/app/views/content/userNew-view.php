@@ -231,7 +231,7 @@
           </div>
         </div>
 
-        <!-- Nombre & Apellido Paterno -->
+        <!-- Nombre Completo & Apellido Paterno -->
         <div class="row-layout">
           <div class="input-field">
             <label for="nombre" class="file-label">Nombre</label>
