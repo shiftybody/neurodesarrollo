@@ -1,17 +1,24 @@
 const formularios = document.querySelectorAll(".form-ajax");
 
+const patternsMsg = {
+  '[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,70}': 'El campo solo puede contener letras y espacios',
+  '[0-9]{10}': 'El campo solo puede contener diez digitos',
+  '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}': 'Como mínimo una minúscula, mayuscula, número y caracter especial',
+}
+
 // Para cada formulario en la pagina con la clase .form-ajax
 formularios.forEach(formulario => {
 
-  // escuchar el evento reset
+  // TODO: escuchar el evento reset y limpiar los mensajes de error, estilos y valores de los inputs
   formulario.addEventListener("reset", function (e) {
     // limpiar los mensajes de error
     document.querySelectorAll('.error-message').forEach(errorMsg => errorMsg.remove());
     document.querySelectorAll('.error-input').forEach(errorInput => errorInput.classList.remove('error-input'));
-
   });
 
-  // escuchar el evento submit
+  // manejar como se lanza una alerta del input cuando no corresponde su patrón de validación
+
+  // TODO: escuchar el evento submit validar los campos del formulario y enviar los datos
   formulario.addEventListener("submit", function (e) {
 
     e.preventDefault();
@@ -25,29 +32,46 @@ formularios.forEach(formulario => {
     document.querySelectorAll('.error-message').forEach(errorMsg => errorMsg.remove());
     document.querySelectorAll('.error-input').forEach(errorInput => errorInput.classList.remove('error-input'));
 
-    // Validación de campos vacíos
+    // TODO: Validación de campos obligatorios estan vacios si lo estan mostrar mensaje de error con showError
+    // Validación de campos obligatorios y patrón
     data.forEach((value, key) => {
-
       const input = formulario.querySelector(`[name="${key}"]`);
 
-      // Solo hacer trim si el valor es una cadena de texto
+      // Validar campos obligatorios
       if (typeof value === "string" && value.trim() === "" && key !== "avatar") {
-        // obtenter el label del input
         let label = input.parentElement.querySelector("label").textContent;
-
-        // si el input es un select, y value = '' entonces el campo esta vacio
         if (input.tagName === "select") {
           showError(input, `Selecciona un rol para el usuario`);
         } else {
-          showError(input, `el campo ${label.toLowerCase()} no puede estar vacío`);
+          showError(input, `El campo ${label.toLowerCase()} no puede estar vacío`);
         }
         isValid = false;
+        return; // Salir de la validación de este campo
       }
 
+      // Validar patrón
+      if (input.hasAttribute('pattern')) {
+        const pattern = input.getAttribute('pattern');
+        const regex = new RegExp(pattern);
+
+        // Validar si el campo contraseña2 es igual a contraseña
+        if (key === 'password2' && value !== data.get('password')) {
+          showError(input, 'Las contraseñas no coinciden');
+          isValid = false;
+          return; // Salir de la validación de este campo
+        }
+
+        // Validar si el campo cumple con el patrón de validación
+        if (!regex.test(value)) {
+          const errorMessage = patternsMsg[pattern] || "El valor no coincide con el patrón requerido";
+          showError(input, errorMessage);
+          isValid = false;
+        }
+      }
     });
 
-
-    if (!isValid) return; // No enviar si hay errores
+    // si no es valido, no hacer la peticion
+    if (!isValid) return;
 
     Swal.fire({
       title: '¿Estás seguro?',
@@ -83,6 +107,7 @@ formularios.forEach(formulario => {
 });
 
 // Mostrar mensaje de error
+
 function showError(input, message) {
   const error = document.createElement('p');
   error.classList.add('error-message');
@@ -90,7 +115,6 @@ function showError(input, message) {
   input.parentElement.appendChild(error);
   input.classList.add('error-input');
 }
-
 
 
 // el mensaje de que un campo no debe estar vacio debe aparecer despues de realizar
@@ -197,26 +221,26 @@ function alertas_ajax(alerta) {
   }
 }
 
-// /* Boton cerrar sesion */
-// let btn_exit = document.getElementById("btn_exit");
+/* Boton cerrar sesion */
+/* let btn_exit = document.getElementById("btn_exit");
 
-// btn_exit.addEventListener("click", function (e) {
+btn_exit.addEventListener("click", function (e) {
 
-//   e.preventDefault();
+  e.preventDefault();
 
-//   Swal.fire({
-//     title: '¿Quieres salir del sistema?',
-//     text: "La sesión actual se cerrará y saldrás del sistema",
-//     icon: 'question',
-//     showCancelButton: true,
-//     confirmButtonColor: '#3085d6',
-//     cancelButtonColor: '#d33',
-//     confirmButtonText: 'Si, salir',
-//     cancelButtonText: 'Cancelar'
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       let url = this.getAttribute("href");
-//       window.location.href = url;
-//     }
-//   });
-// });
+  Swal.fire({
+    title: '¿Quieres salir del sistema?',
+    text: "La sesión actual se cerrará y saldrás del sistema",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, salir',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      let url = this.getAttribute("href");
+      window.location.href = url;
+    }
+  });
+});  */

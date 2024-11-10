@@ -197,7 +197,7 @@
     background: var(--red-50, color(display-p3 0.9922 0.949 0.949)) !important;
   }
 
-  .error-input:hover{
+  .error-input:hover {
     border: 2px
   }
 </style>
@@ -211,19 +211,17 @@
         <p class="helper">Ingrese los datos del usuario que desea crear</p>
       </div>
 
-      <!-- TODO: agregar patrones de expresiones regulares a los input con pattern y maxlength al tipo texto  -->
-      <!--  -->
-      <form action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" method="POST" class="form-layout form-ajax" enctype="multipart/form-data">
+      <form novalidate action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" method="POST" class="form-layout form-ajax" enctype="multipart/form-data">
 
+        <!-- Input hidden que se utiliza para agregar a la solicitud la intención o acción del formulario  -->
         <input type="hidden" name="modulo_usuario" value="registrar">
 
+        <!-- Avatar -->
         <div class="upload-avatar">
-
           <label for="file-label" class="file-label">Escoge una imagen de perfil</label>
           <div class="file-section">
             <span class="user-avatar">
             </span>
-            <!-- Foto de Perfil -->
             <div class="file-upload">
               <input id="file-input" type="file" name="avatar" accept="image/png, image/jpeg" class="input" />
               <p class="helper" id="file_input_help"> png, gif, jpg tamaño máximo 800KB</p>
@@ -263,7 +261,7 @@
           </div>
           <div class="input-field">
             <label for="rol" class="file-label">Rol</label>
-            <select name="rol" id="rol" class="input"  >
+            <select name="rol" id="rol" class="input">
               <option value="" selected>Selecciona un rol</option>
               <option value="1">Administrador</option>
               <option value="2">Usuario</option>
