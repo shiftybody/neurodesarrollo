@@ -1,10 +1,30 @@
 const formularios = document.querySelectorAll(".form-ajax");
 
-const patternsMsg = {
+const PATTERN_MSG = {
   '[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,70}': 'El campo solo puede contener letras y espacios',
   '[0-9]{10}': 'El campo solo puede contener diez digitos',
   '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}': 'Como mínimo una minúscula, mayuscula, número y caracter especial',
 }
+
+// TODO: escuchar cuando se suba una imagen al input file con id file-input y mostrarla en el elemento con clase .user-avatar es un span con un background image
+document.querySelectorAll('.input-file').forEach(input => {
+
+  console.log(document.querySelectorAll('.input-file'));
+  console.log(document.querySelector('.user-avatar'));
+
+  input.addEventListener('change', function () {
+    const file = this.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      document.querySelector('.user-avatar').style.backgroundImage = `url(${reader.result})`;
+    }
+
+    reader.readAsDataURL(file);
+  });
+
+});
+
 
 // Para cada formulario en la pagina con la clase .form-ajax
 formularios.forEach(formulario => {
@@ -25,7 +45,7 @@ formularios.forEach(formulario => {
 
     let isValid = true;
     const data = new FormData(this);
-    // imrpimir los datos del formulario como un objeto
+    // imprimir los datos del formulario como un objeto
     console.log(Object.fromEntries(data));
 
     // Limpiar los mensajes de error previos
@@ -63,7 +83,7 @@ formularios.forEach(formulario => {
 
         // Validar si el campo cumple con el patrón de validación
         if (!regex.test(value)) {
-          const errorMessage = patternsMsg[pattern] || "El valor no coincide con el patrón requerido";
+          const errorMessage = PATTERN_MSG[pattern] || "El valor no coincide con el patrón requerido";
           showError(input, errorMessage);
           isValid = false;
         }
@@ -87,6 +107,7 @@ formularios.forEach(formulario => {
         let method = this.getAttribute("method");
         let action = this.getAttribute("action");
         let encabezados = new Headers();
+        console.log(data);
 
         let config = {
           method: method,
@@ -97,7 +118,7 @@ formularios.forEach(formulario => {
         };
 
         fetch(action, config)
-          .then(respuesta => respuesta.json())
+          .then(respuesta => { console.log(respuesta); return respuesta.json() })
           .then(respuesta => {
             return alertas_ajax(respuesta);
           });
@@ -106,8 +127,7 @@ formularios.forEach(formulario => {
   });
 });
 
-// Mostrar mensaje de error
-
+// Mostrar mensaje de erro
 function showError(input, message) {
   const error = document.createElement('p');
   error.classList.add('error-message');
@@ -115,70 +135,6 @@ function showError(input, message) {
   input.parentElement.appendChild(error);
   input.classList.add('error-input');
 }
-
-
-// el mensaje de que un campo no debe estar vacio debe aparecer despues de realizar
-// el submit y no antes de hacerlo
-
-// el mensaje de que un input ha sido llenado incorrectamente debe aparecer despues de
-// cambiar de input y no antes de hacerlo
-
-// los mensajes de error de que un campo no debe estar vacio deben desaparecer despues de
-// llenar el campo correctamente y no antes de hacerlo
-
-// los mensajes de error de que un campo ha sido llenado incorrectamente deben desaparece despues de
-// llenar el campo correctamente y no antes de hacerlo
-
-
-
-
-// const formularios_ajax = document.querySelectorAll(".form-ajax");
-
-// formularios_ajax.forEach(formularios => {
-
-//   formularios.addEventListener("submit", function (e) {
-
-//     e.preventDefault();
-
-//     Swal.fire({
-//       title: '¿Estás seguro?',
-//       text: "Quieres realizar la acción solicitada",
-//       icon: 'question',
-//       showCancelButton: true,
-//       confirmButtonColor: '#3085d6',
-//       cancelButtonColor: '#d33',
-//       confirmButtonText: 'Si, realizar',
-//       cancelButtonText: 'No, cancelar'
-//     }).then((result) => {
-//       if (result.isConfirmed) {
-
-//         let data = new FormData(this);
-//         let method = this.getAttribute("method");
-//         let action = this.getAttribute("action");
-
-//         let encabezados = new Headers();
-
-//         let config = {
-//           method: method,
-//           headers: encabezados,
-//           mode: 'cors',
-//           cache: 'no-cache',
-//           body: data
-//         };
-
-//         fetch(action, config)
-//           .then(respuesta => respuesta.json())
-//           .then(respuesta => {
-//             return alertas_ajax(respuesta);
-//           });
-//       }
-//     });
-
-//   });
-
-// });
-
-
 
 function alertas_ajax(alerta) {
   if (alerta.tipo == "simple") {
@@ -213,6 +169,8 @@ function alertas_ajax(alerta) {
     }).then((result) => {
       if (result.isConfirmed) {
         document.querySelector(".form-ajax").reset();
+        // cambiar la imagen de la vista previa 
+        document.querySelector('.user-avatar').style.backgroundImage = `url(../fotos/avatar.jpg)`;
       }
     });
 

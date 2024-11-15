@@ -1,28 +1,30 @@
 services:
   web:
-    image: apache:latest
-    restart: always
     build:
       context: .
       dockerfile: Dockerfile
+    image: neurodesarrollo_php_web
+    restart: always
     volumes:
       - ./dist/:/var/www/html
+      - ./php.ini:/usr/local/etc/php/php.ini
     ports:
       - "80:80"
+    entrypoint: >
+      sh -c "chmod -R 777 /tmp && apache2-foreground"
     networks:
       - neurodesarrollo
 
   db:
     image: vsamov/mysql-5.1.73
     restart: always
-    volumes:
-      - trabajo_social_db_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: L93vjd6g4bYzT2UZ
       MYSQL_USER: trabajo_social_appuser
       MYSQL_PASSWORD: 8jG2FqWxvdH3zfak
       MYSQL_DATABASE: servicio_social
-
+    volumes:
+      - trabajo_social_db_data:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
@@ -34,3 +36,4 @@ volumes:
 networks:
   neurodesarrollo:
     driver: bridge
+

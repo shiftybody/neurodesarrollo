@@ -3,6 +3,8 @@
 namespace app\models;
 
 use \PDO;
+use \PDOException;
+use \Exception;
 
 if (file_exists(__DIR__ . "/../../config/server.php")) {
   require_once __DIR__ . "/../../config/server.php";
@@ -12,6 +14,7 @@ class mainModel
 {
 
   private $server = DB_SERVER;
+  private $port = DB_PORT;
   private $db = DB_NAME;
   private $user = DB_USER;
   private $pass = DB_PASS;
@@ -19,18 +22,46 @@ class mainModel
   /*----------  Funcion conectar a BD  ----------*/
   protected function conectar()
   {
-    $conexion = new PDO("mysql:host=" . $this->server . ";dbname=" . $this->db, $this->user, $this->pass);
-    $conexion->exec("SET CHARACTER SET utf8");
-    return $conexion;
+    try {
+      $conexion = new PDO(
+        "mysql:host=" . $this->server . ";port=" . $this->port . ";dbname=" . $this->db,
+        $this->user,
+        $this->pass
+      );
+      $conexion->exec("SET CHARACTER SET utf8");
+      return $conexion;
+    } catch (PDOException $e) {
+      echo "Error de conexión: " . $e->getMessage();
+      exit;
+    }
   }
 
+  public function correoExiste($correo)
+  {
+    $query = "SELECT COUNT(*) as total FROM usuario WHERE usuario_email = :correo";
+    $result = $this->ejecutarConsulta($query, [':correo' => $correo]);
+    $data = $result->fetch(PDO::FETCH_ASSOC);
+    return $data['total'] > 0;
+  }
 
   /*----------  Funcion ejecutar consultas  ----------*/
-  protected function ejecutarConsulta($consulta)
+  protected function ejecutarConsulta($consulta, $parametros = [])
   {
-    $sql = $this->conectar()->prepare($consulta);
-    $sql->execute();
-    return $sql;
+    try {
+      $conexion = $this->conectar();
+      $sql = $conexion->prepare($consulta);
+
+      // Asociar parámetros, si los hay
+      foreach ($parametros as $clave => $valor) {
+        $sql->bindValue($clave, $valor);
+      }
+
+      $sql->execute();
+      return $sql;
+    } catch (Exception $e) {
+      error_log("Error en ejecutarConsulta: " . $e->getMessage());
+      throw new Exception("Error al ejecutar la consulta");
+    }
   }
 
 
@@ -58,9 +89,9 @@ class mainModel
   protected function verificarDatos($filtro, $cadena)
   {
     if (preg_match("/^" . $filtro . "$/", $cadena)) {
-      return false;
+      return false; // si preg match devuelve falso es que es valido
     } else {
-      return true;
+      return true; // si preg match devuelve verdadero es que no es valido
     }
   }
 
@@ -68,39 +99,52 @@ class mainModel
   /*----------  Funcion para ejecutar una consulta INSERT preparada  ----------*/
   protected function guardarDatos($tabla, $datos)
   {
+    try {
+      // Construcción de la consulta
+      $query = "INSERT INTO $tabla (";
 
-    $query = "INSERT INTO $tabla (";
-
-    $C = 0;
-    foreach ($datos as $clave) {
-      if ($C >= 1) {
-        $query .= ",";
+      $C = 0;
+      foreach ($datos as $clave) {
+        if ($C >= 1) {
+          $query .= ",";
+        }
+        $query .= $clave["campo_nombre"];
+        $C++;
       }
-      $query .= $clave["campo_nombre"];
-      $C++;
-    }
 
-    $query .= ") VALUES(";
+      $query .= ") VALUES(";
 
-    $C = 0;
-    foreach ($datos as $clave) {
-      if ($C >= 1) {
-        $query .= ",";
+      $C = 0;
+      foreach ($datos as $clave) {
+        if ($C >= 1) {
+          $query .= ",";
+        }
+        $query .= $clave["campo_marcador"];
+        $C++;
       }
-      $query .= $clave["campo_marcador"];
-      $C++;
+
+      $query .= ")";
+
+      // Preparar la consulta
+      $sql = $this->conectar()->prepare($query);
+      if (!$sql) {
+        die("Error al preparar la consulta: " . print_r($this->conectar()->errorInfo(), true));
+      }
+
+      // Bindear los valores
+      foreach ($datos as $clave) {
+        $sql->bindValue($clave["campo_marcador"], $clave["campo_valor"]);
+      }
+
+      // Ejecutar la consulta
+      if (!$sql->execute()) {
+        die("Error al ejecutar la consulta: " . print_r($sql->errorInfo(), true));
+      }
+
+      return $sql;
+    } catch (PDOException $e) {
+      die("Excepción capturada: " . $e->getMessage());
     }
-
-    $query .= ")";
-    $sql = $this->conectar()->prepare($query);
-
-    foreach ($datos as $clave) {
-      $sql->bindParam($clave["campo_marcador"], $clave["campo_valor"]);
-    }
-
-    $sql->execute();
-
-    return $sql;
   }
 
 

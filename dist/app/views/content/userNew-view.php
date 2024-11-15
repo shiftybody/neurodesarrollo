@@ -17,7 +17,6 @@
   }
 
   input[type="file"] {
-    /* add a border and full weight */
     border: 1px solid #ccc;
     border-radius: .5rem;
     display: inline-block;
@@ -106,14 +105,11 @@
     align-self: stretch;
     color: var(--gray-900, var(--gray-900, #0C192A));
     color: var(--gray-900, var(--gray-900, color(display-p3 0.0667 0.098 0.1569)));
-
-    /* text-sm/font-semibold */
     font-family: Inter;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
     line-height: 150%;
-    /* 21px */
   }
 
   .form-information {
@@ -211,7 +207,7 @@
         <p class="helper">Ingrese los datos del usuario que desea crear</p>
       </div>
 
-      <form novalidate action="<?php echo APP_URL ?>app/ajax/usuarioAjax.php" method="POST" class="form-layout form-ajax" enctype="multipart/form-data">
+      <form novalidate action="<?php echo APP_URL; ?>app/ajax/usuarioAjax.php" method="POST" class="form-layout form-ajax" enctype="multipart/form-data">
 
         <!-- Input hidden que se utiliza para agregar a la solicitud la intención o acción del formulario  -->
         <input type="hidden" name="modulo_usuario" value="registrar">
@@ -223,8 +219,8 @@
             <span class="user-avatar">
             </span>
             <div class="file-upload">
-              <input id="file-input" type="file" name="avatar" accept="image/png, image/jpeg" class="input" />
-              <p class="helper" id="file_input_help"> png, gif, jpg tamaño máximo 800KB</p>
+              <input id="file-input" type="file" name="avatar" accept="image/png, image/jpeg" class="input input-file" />
+              <p class="helper" id="file_input_help"> png, gif, jpg tamaño máximo 5MB</p>
             </div>
           </div>
         </div>
