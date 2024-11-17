@@ -20,8 +20,11 @@ if (isset($_GET['views'])) {
   <?php
 
   use app\controllers\viewsController;
+  use app\controllers\loginController;
 
+  $insLogin = new loginController();
   $viewsController = new viewsController();
+  
   $views = $viewsController->getViewsController($url[0]);
 
   if ($views == "login" || $views == "404") {

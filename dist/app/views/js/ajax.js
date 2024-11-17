@@ -6,7 +6,7 @@ const PATTERN_MSG = {
   '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}': 'Como mínimo una minúscula, mayuscula, número y caracter especial',
 }
 
-// TODO: escuchar cuando se suba una imagen al input file con id file-input y mostrarla en el elemento con clase .user-avatar es un span con un background image
+
 document.querySelectorAll('.input-file').forEach(input => {
 
   console.log(document.querySelectorAll('.input-file'));
@@ -29,16 +29,15 @@ document.querySelectorAll('.input-file').forEach(input => {
 // Para cada formulario en la pagina con la clase .form-ajax
 formularios.forEach(formulario => {
 
-  // TODO: escuchar el evento reset y limpiar los mensajes de error, estilos y valores de los inputs
+  //escuchar el evento reset y limpiar los mensajes de error, estilos y valores de los inputs
   formulario.addEventListener("reset", function (e) {
-    // limpiar los mensajes de error
     document.querySelectorAll('.error-message').forEach(errorMsg => errorMsg.remove());
     document.querySelectorAll('.error-input').forEach(errorInput => errorInput.classList.remove('error-input'));
   });
 
   // manejar como se lanza una alerta del input cuando no corresponde su patrón de validación
 
-  // TODO: escuchar el evento submit validar los campos del formulario y enviar los datos
+  // escuchar el evento submit validar los campos del formulario y enviar los datos
   formulario.addEventListener("submit", function (e) {
 
     e.preventDefault();
@@ -52,8 +51,7 @@ formularios.forEach(formulario => {
     document.querySelectorAll('.error-message').forEach(errorMsg => errorMsg.remove());
     document.querySelectorAll('.error-input').forEach(errorInput => errorInput.classList.remove('error-input'));
 
-    // TODO: Validación de campos obligatorios estan vacios si lo estan mostrar mensaje de error con showError
-    // Validación de campos obligatorios y patrón
+    // Validación de campos obligatorios estan vacios si lo estan mostrar mensaje de error con showError
     data.forEach((value, key) => {
       const input = formulario.querySelector(`[name="${key}"]`);
 
@@ -178,27 +176,3 @@ function alertas_ajax(alerta) {
     window.location.href = alerta.url;
   }
 }
-
-/* Boton cerrar sesion */
-/* let btn_exit = document.getElementById("btn_exit");
-
-btn_exit.addEventListener("click", function (e) {
-
-  e.preventDefault();
-
-  Swal.fire({
-    title: '¿Quieres salir del sistema?',
-    text: "La sesión actual se cerrará y saldrás del sistema",
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, salir',
-    cancelButtonText: 'Cancelar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      let url = this.getAttribute("href");
-      window.location.href = url;
-    }
-  });
-});  */

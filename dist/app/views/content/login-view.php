@@ -117,14 +117,14 @@
     }
   </style>
   <header>
-    <img src="<?php echo APP_URL?>app/views/img/imagotipo-neurodesarrollo.png" alt="imagotipo neurodesarrollo" id="imagotipo">
-    <img src="<?php echo APP_URL?>app/views/img/logo-unam.svg" alt="escudo UNAM" id="escudo">
+    <img src="<?php echo APP_URL ?>app/views/img/imagotipo-neurodesarrollo.png" alt="imagotipo neurodesarrollo" id="imagotipo">
+    <img src="<?php echo APP_URL ?>app/views/img/logo-unam.svg" alt="escudo UNAM" id="escudo">
   </header>
   <main>
     <section id="section-container">
-      <img src="<?php echo APP_URL?>app/views/img/logotipo-neurodesarrollo.png" alt="logitipo neurodesarrollo" id="logotipo">
+      <img src="<?php echo APP_URL ?>app/views/img/logotipo-neurodesarrollo.png" alt="logitipo neurodesarrollo" id="logotipo">
 
-      <form action="" id="login-form" method="POST">
+      <form novalidate action="<?php echo APP_URL; ?>app/ajax/loginAjax.php" id="login-form" method="POST">
 
         <div id="login-info">
           <h1>Iniciar Sesión</h1>
@@ -134,11 +134,11 @@
         <div id="inputs">
           <div id="username-input">
             <label for="username">Correo o Nombre de Usuario</label>
-            <input type="text" name="username" id="username" placeholder="usuario@dominio.com" required>
+            <input type="text" name="username" id="username" placeholder="usuario@dominio.com" pattern="">
           </div>
           <div id="password-input">
             <label for="password">Contraseña</label>
-            <input type="password" name="password" id="password" placeholder="•••••••••••" required>
+            <input type="password" name="password" id="password" placeholder="•••••••••••">
           </div>
 
         </div>
@@ -151,3 +151,8 @@
       </form>
     </section>
   </main>
+  <?php
+  if (isset($_POST['username']) && isset($_POST['password'])) {
+    $insLogin->iniciarSesionControlador();
+  }
+  ?>
