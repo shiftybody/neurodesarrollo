@@ -64,7 +64,6 @@ class mainModel
     }
   }
 
-
   /*----------  Funcion limpiar cadenas  ----------*/
   public function limpiarCadena($cadena)
   {
@@ -147,6 +146,19 @@ class mainModel
     }
   }
 
+  /*---  Funcion para convertir un input de tipo contraseña a un hash -------*/
+  protected function hashPassword($password)
+  {
+    $salt = bin2hex(openssl_random_pseudo_bytes(22));
+    $salt = sprintf('$2y$12$%s$', $salt);
+    return crypt($password, $salt);
+  }
+
+  /*---  Funcion para verificar la contraseña ingresada con el hash -------*/
+  function verify_password($password, $hashed_password)
+  {
+    return crypt($password, $hashed_password) === $hashed_password;
+  }
 
   /*---------- Funcion seleccionar datos ----------*/
   public function seleccionarDatos($tipo, $tabla, $campo, $id)

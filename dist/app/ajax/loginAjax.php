@@ -5,14 +5,14 @@ require_once "../../autoload.php";
 
 use app\controllers\loginController;
 
-if (isset($_POST['modulo_usuario'])) {
-  
+if (isset($_POST['modulo_login'])) {
+
   $insLogin = new loginController();
 
-  if($_POST['modulo_usuario'] == "registrar"){
-    echo $insUsuario -> ();
+  if ($_POST['modulo_login'] == "login") {
+    echo $insLogin->iniciarSesionControlador();
   }
 } else {
   session_destroy();
-  header("Location: ". APP_URL."login/");
+  header("Location: " . APP_URL . "login/");
 }

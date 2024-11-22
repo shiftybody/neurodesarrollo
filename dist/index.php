@@ -24,12 +24,16 @@ if (isset($_GET['views'])) {
 
   $insLogin = new loginController();
   $viewsController = new viewsController();
-  
+
   $views = $viewsController->getViewsController($url[0]);
 
   if ($views == "login" || $views == "404") {
     require_once "./app/views/content/" . $views . "-view.php";
   } else {
+    if(!ISSET($_SESSION['id']) || !ISSET($_SESSION['usuario']) || !ISSET($_SESSION['nombre']) || !ISSET($_SESSION['apellido_paterno']) || !ISSET($_SESSION['apellido_materno']) || !ISSET($_SESSION['foto']) || !ISSET($_SESSION['rol'])){
+      $insLogin->cerrarSesionControlador();
+      exit();
+    }
     require_once "./app/views/inc/navbar.php";
     require_once $views;
   }

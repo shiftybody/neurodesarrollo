@@ -124,21 +124,23 @@
     <section id="section-container">
       <img src="<?php echo APP_URL ?>app/views/img/logotipo-neurodesarrollo.png" alt="logitipo neurodesarrollo" id="logotipo">
 
-      <form novalidate action="<?php echo APP_URL; ?>app/ajax/loginAjax.php" id="login-form" method="POST">
+      <form novalidate action="<?php echo APP_URL; ?>app/ajax/loginAjax.php" id="login-form" method="POST" class="form-ajax">
 
         <div id="login-info">
           <h1>Iniciar Sesión</h1>
           <p>Ingresa tu usuario & contraseña para acceder a tu cuenta</p>
         </div>
 
+        <input type="hidden" name="modulo_login" value="login">
+
         <div id="inputs">
           <div id="username-input">
             <label for="username">Correo o Nombre de Usuario</label>
-            <input type="text" name="username" id="username" placeholder="usuario@dominio.com" pattern="">
+            <input type="text" name="username" id="username" placeholder="usuario@dominio.com" pattern="^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}|[a-zA-Z0-9._@!#$%^&*+\-]{3,70})$">
           </div>
           <div id="password-input">
             <label for="password">Contraseña</label>
-            <input type="password" name="password" id="password" placeholder="•••••••••••">
+            <input type="password" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}" placeholder="•••••••••••">
           </div>
 
         </div>
@@ -151,6 +153,7 @@
       </form>
     </section>
   </main>
+  <script src=""></script>
   <?php
   if (isset($_POST['username']) && isset($_POST['password'])) {
     $insLogin->iniciarSesionControlador();

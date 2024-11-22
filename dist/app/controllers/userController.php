@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\mainModel;
 
+
 class userController extends mainModel
 {
   # controllador para registrar usuario #
@@ -27,7 +28,6 @@ class userController extends mainModel
     # limpiar datos #
     foreach ($datosUsuario as $campo => $value) {
       if ($campo !== 'avatar') {
-        // Evitar limpiar el campo del archivo
         $datosUsuario[$campo] = $this->limpiarCadena($value);
       }
     }
@@ -44,10 +44,7 @@ class userController extends mainModel
       exit();
     }
 
-    // TODO: verificar integridad de los datos expresiones regulares de los input de texto
-
     # verificar integridad de los datos expresiones regulares #
-
     if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,70}", $datosUsuario['nombre'])) {
       $alerta = [
         "tipo" => "simple",
@@ -92,6 +89,7 @@ class userController extends mainModel
       exit();
     }
 
+    # nombre de usuario no se verifica correctamente por alguna razon
     // if ($this->verificarDatos("[a-zA-Z0-9._@!#$%^&*+\-]{3,70}", $datosUsuario['username'])) {
     //   $alerta = [
     //     "tipo" => "simple",
@@ -124,13 +122,10 @@ class userController extends mainModel
       return json_encode($alerta);
       exit();
     } else {
-      $datosUsuario['key'] =  md5($datosUsuario['pass']);
+      $datosUsuario['key'] = $this->hashPassword($datosUsuario['pass']);
     }
 
-
-    // TODO: verificar que el correo no exista en la base de datos y el 
-    // formato sea valido
-
+    # verificar que el correo no exista en la base de datos y el formato sea valido
     if (filter_var($datosUsuario['correo'], FILTER_VALIDATE_EMAIL)) {
       if ($this->correoExiste($datosUsuario['correo'])) {
         $alerta = [
@@ -153,9 +148,7 @@ class userController extends mainModel
       exit();
     }
 
-
-    // TODO: verificar que un usuario no se repita
-
+    # verificar que un usuario no se repita
     $query = "SELECT usuario_usuario FROM usuario WHERE usuario_usuario = :username";
     $check_user = $this->ejecutarConsulta($query, [':username' => $datosUsuario['username']]);
 
@@ -169,8 +162,6 @@ class userController extends mainModel
       return json_encode($alerta);
       exit();
     }
-
-
 
     # ------------------------ Validaciones de la image ------------------------ # 
 

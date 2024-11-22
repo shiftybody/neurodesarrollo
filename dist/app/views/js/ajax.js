@@ -4,9 +4,10 @@ const PATTERN_MSG = {
   '[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,70}': 'El campo solo puede contener letras y espacios',
   '[0-9]{10}': 'El campo solo puede contener diez digitos',
   '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}': 'Como mínimo una minúscula, mayuscula, número y caracter especial',
+  '^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}|[a-zA-Z0-9._@!#$%^&*+\\-]{3,70})$': 'El correo o nombre de usuario no es válido',
 }
 
-
+// Para cada input de tipo file en la pagina con la clase .input-file
 document.querySelectorAll('.input-file').forEach(input => {
 
   console.log(document.querySelectorAll('.input-file'));
@@ -25,7 +26,6 @@ document.querySelectorAll('.input-file').forEach(input => {
 
 });
 
-
 // Para cada formulario en la pagina con la clase .form-ajax
 formularios.forEach(formulario => {
 
@@ -35,8 +35,6 @@ formularios.forEach(formulario => {
     document.querySelectorAll('.error-input').forEach(errorInput => errorInput.classList.remove('error-input'));
   });
 
-  // manejar como se lanza una alerta del input cuando no corresponde su patrón de validación
-
   // escuchar el evento submit validar los campos del formulario y enviar los datos
   formulario.addEventListener("submit", function (e) {
 
@@ -44,6 +42,7 @@ formularios.forEach(formulario => {
 
     let isValid = true;
     const data = new FormData(this);
+
     // imprimir los datos del formulario como un objeto
     console.log(Object.fromEntries(data));
 
@@ -51,13 +50,16 @@ formularios.forEach(formulario => {
     document.querySelectorAll('.error-message').forEach(errorMsg => errorMsg.remove());
     document.querySelectorAll('.error-input').forEach(errorInput => errorInput.classList.remove('error-input'));
 
-    // Validación de campos obligatorios estan vacios si lo estan mostrar mensaje de error con showError
+    // Para cada campo del formulario
     data.forEach((value, key) => {
       const input = formulario.querySelector(`[name="${key}"]`);
 
       // Validar campos obligatorios
+
+      // Si el campo es un string vacío y no es el campo avatar
       if (typeof value === "string" && value.trim() === "" && key !== "avatar") {
         let label = input.parentElement.querySelector("label").textContent;
+        // Si el campo es un select
         if (input.tagName === "select") {
           showError(input, `Selecciona un rol para el usuario`);
         } else {
@@ -67,7 +69,7 @@ formularios.forEach(formulario => {
         return; // Salir de la validación de este campo
       }
 
-      // Validar patrón
+      // Validar patrón si el campo tiene el atributo pattern
       if (input.hasAttribute('pattern')) {
         const pattern = input.getAttribute('pattern');
         const regex = new RegExp(pattern);
@@ -90,6 +92,7 @@ formularios.forEach(formulario => {
 
     // si no es valido, no hacer la peticion
     if (!isValid) return;
+
 
     Swal.fire({
       title: '¿Estás seguro?',
@@ -119,13 +122,13 @@ formularios.forEach(formulario => {
           .then(respuesta => { console.log(respuesta); return respuesta.json() })
           .then(respuesta => {
             return alertas_ajax(respuesta);
-          });
+        });
       }
     });
   });
 });
 
-// Mostrar mensaje de erro
+// Mostrar mensaje de error 
 function showError(input, message) {
   const error = document.createElement('p');
   error.classList.add('error-message');
@@ -134,6 +137,7 @@ function showError(input, message) {
   input.classList.add('error-input');
 }
 
+// manejar las alertas de respuesta del servidor
 function alertas_ajax(alerta) {
   if (alerta.tipo == "simple") {
 
@@ -176,3 +180,27 @@ function alertas_ajax(alerta) {
     window.location.href = alerta.url;
   }
 }
+
+// TODO Cerrar sesión
+let btn_exit = document.getElementById("btn_exit"
+);
+console.log(btn_exit);
+
+btn_exit.addEventListener('click', function (e) {
+  e.preventDefault();
+  Swal.fire({
+    title: '¿Quieres salir del sistema?',
+    text: "La sesión actual se cerrara",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si',
+    cancelButtonText: 'No'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      let url = this.getAttribute('href');
+      window.location.href = url;
+    }
+  })
+})

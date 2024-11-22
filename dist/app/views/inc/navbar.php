@@ -279,7 +279,7 @@
       Mi Perfil
     </a>
     <img src="<?php echo APP_URL; ?>app/views/icons/h-line.svg" alt="">
-    <a href="<?php echo APP_URL; ?>logOut/">
+    <a href="<?php echo APP_URL; ?>logOut/" id="btn_exit">
       <img src="<?php echo APP_URL; ?>app/views/icons/logout.svg" class="option-icon">
       Salir
     </a>
