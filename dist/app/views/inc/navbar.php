@@ -97,7 +97,6 @@
     border-radius: 100px;
     border: 1px solid var(--white, #FFF);
     border: 1px solid var(--white, color(display-p3 1 1 1));
-    background: url("<?php echo APP_URL; ?>app/views/fotos/avatar.jpg") lightgray 50% / cover no-repeat;
   }
 
   #avatar-status {
@@ -207,6 +206,22 @@
         </button>
       </div>
       <!-- avatar -->
+      <?php
+      if (is_file("./app/views/fotos/" . $_SESSION['foto'])) {
+
+        echo '<style>
+        #avatar {
+          background: url(' . APP_URL . 'app/views/fotos/' . $_SESSION['foto'] . ') lightgray 50% / cover no-repeat;
+        }
+      </style>';
+      } else {
+        echo '<style>
+        #avatar {
+          background: url(' . APP_URL . 'app/views/fotos/avatar.jpg) lightgray 50% / cover no-repeat;
+        }
+      </style>';
+      }
+      ?>
       <div id="avatar">
         <span id="avatar-status">
         </span>
@@ -264,8 +279,7 @@
 <div id="right-sidebar" class="sidebar right">
   <div class="sidebar-header">
     <div id="avatar">
-      <span id="avatar-status">
-      </span>
+      <span id="avatar-status"></span>
     </div>
     <a href="javascript:void(0)" class="closebtn" id="right-closeButton">
       <button type="button" id="menu" class="closebtn">
@@ -274,7 +288,7 @@
     </a>
   </div>
   <div id="sidebar-options">
-    <a href="<?php echo APP_URL; ?>userUpdate/">
+    <a href="<?php echo APP_URL . "userUpdate/" . $_SESSION['id'] . "/"; ?>">
       <img src="<?php echo APP_URL; ?>app/views/icons/user.svg" alt="" class="option-icon">
       Mi Perfil
     </a>

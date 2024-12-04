@@ -7,7 +7,7 @@ use app\models\mainModel;
 
 class userController extends mainModel
 {
-  # controllador para registrar usuario #
+  # controllador para registrar usuario
   public function registrarUsuarioControlador()
   {
     # almacenar datos #
@@ -323,5 +323,18 @@ class userController extends mainModel
       ];
     }
     return json_encode($alerta);
+  }
+
+  # controlador para listar usuarios devuelve
+  # un json con los datos de los usuarios
+  public function listarUsuarioControlador()
+  {
+    /* los campos de la tabla deben ser NO, NOMBRE COMPLETO, 
+NOMBRE DE USUARIO, CORREO, ESTADO, ROL y ACCIONES */
+
+    $query = "SELECT usuario_id, usuario_nombre, usuario_apellido_materno, usuario_apellido_paterno, usuario_usuario, usuario_email, usuario_estado, usuario_rol FROM usuario";
+    $listar_usuarios = $this->ejecutarConsulta($query);
+
+    return json_encode($listar_usuarios->fetchAll());
   }
 }

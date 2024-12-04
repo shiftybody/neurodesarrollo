@@ -181,26 +181,26 @@ function alertas_ajax(alerta) {
   }
 }
 
-// TODO Cerrar sesión
-let btn_exit = document.getElementById("btn_exit"
-);
-console.log(btn_exit);
+// Cerrar sesión
+if(document.getElementById("btn_exit") != null) {
+  let btn_exit = document.getElementById("btn_exit");
 
-btn_exit.addEventListener('click', function (e) {
-  e.preventDefault();
-  Swal.fire({
-    title: '¿Quieres salir del sistema?',
-    text: "La sesión actual se cerrara",
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si',
-    cancelButtonText: 'No'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      let url = this.getAttribute('href');
-      window.location.href = url;
-    }
+  btn_exit.addEventListener('click', function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: '¿Quieres salir del sistema?',
+      text: "La sesión actual se cerrara",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let url = this.getAttribute('href');
+        window.location.href = url;
+      }
+    })
   })
-})
+}

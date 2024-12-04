@@ -222,7 +222,7 @@
               <input type="text" name="apellidoMaterno" id="apellidoMaterno" class="input" placeholder="Apellido Materno" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,70}" maxlength="70">
             </div>
             <div class="input-field">
-              <label for="telefono" class="file-label">Telefono</label>
+              <label for="telefono" class="file-label">Teléfono</label>
               <input type="text" name="telefono" id="telefono" class="input" placeholder="Telefono" pattern="[0-9]{10}" maxlength="10">
             </div>
           </div>

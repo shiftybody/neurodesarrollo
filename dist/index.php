@@ -30,6 +30,7 @@ if (isset($_GET['views'])) {
   if ($views == "login" || $views == "404") {
     require_once "./app/views/content/" . $views . "-view.php";
   } else {
+    
     if(!ISSET($_SESSION['id']) || !ISSET($_SESSION['usuario']) || !ISSET($_SESSION['nombre']) || !ISSET($_SESSION['apellido_paterno']) || !ISSET($_SESSION['apellido_materno']) || !ISSET($_SESSION['foto']) || !ISSET($_SESSION['rol'])){
       $insLogin->cerrarSesionControlador();
       exit();

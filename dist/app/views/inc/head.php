@@ -4,4 +4,7 @@
 <link rel="stylesheet" href="<?php echo APP_URL ?>/app/views/css/styles.css">
 <link rel="stylesheet" href="<?php echo APP_URL ?>/app/views/css/custom.css">
 <link rel="stylesheet" href="<?php echo APP_URL ?>/app/views/css/sweetalert2.min.css">
+<link rel="stylesheet" href="/app/views/utils/datatables.css" />
+
 <script src="<?php echo APP_URL ?>/app/views/js/sweetalert2.min.js"></script>
+<script src="<?php echo APP_URL ?>/app/views/utils/datatables.js"></script>
