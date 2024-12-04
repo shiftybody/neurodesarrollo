@@ -244,6 +244,7 @@ y 3 botoncitos para cambiar el estado o el rol -->
     border-radius: 4px;
     padding: 0.5rem 1rem;
   }
+
 </style>
 <div class="container">
   <div class=" navigation">
@@ -277,12 +278,12 @@ y 3 botoncitos para cambiar el estado o el rol -->
         <div class="tools">
           <form action="" class="filter_form">
             <select name="filterColumn" id="filterColumn">
-              <option value="">Todo</option>
-              <option value="">Nombre</option>
-              <option value="">Usuario</option>
-              <option value="">Correo</option>
-              <option value="">Estado</option>
-              <option value="">Rol</option>
+              <option value="0">Todo</option>
+              <option value="1">Nombre</option>
+              <option value="2">Usuario</option>
+              <option value="3">Correo</option>
+              <option value="4">Estado</option>
+              <option value="5">Rol</option>
             </select>
             <input type="text" name="matchingColumn" id="matchingInput" placeholder="Buscar">
 
@@ -314,9 +315,9 @@ y 3 botoncitos para cambiar el estado o el rol -->
 </div>
 <script>
   let table = new DataTable('#myTable', {
-    searching: false,
     lengthChange: false,
     layout: {
+      topStart: null,
       buttomStart: null,
       buttomEnd: null
     },
@@ -367,58 +368,39 @@ y 3 botoncitos para cambiar el estado o el rol -->
       });
   })();
 
-  function goTo(url) {
-    window.location.href = `../${url}`;
-  }
-
   // TODO: implementar la busqueda de cualquier modulo del sistema desde el elemento search utilizando la tecla '/'
-  document.addEventListener('keydown', (e) => {
-    if (e.key === '/') {
-      document.querySelector('.search').focus();
+
+  let matchingInput = document.getElementById('matchingInput');
+
+  matchingInput.addEventListener('submit', (e) => {
+    e.preventDefault();
+  })
+
+  matchingInput.addEventListener('keyup', (e) => {
+
+    let filterColumn = document.getElementById('filterColumn')
+
+    console.log(filterColumn.value)
+
+    if (filterColumn.value == 0) {
+      filterGlobal(table);
+    } else {
+      FfilterColumn(table, filterColumn.value);
     }
-  });
+  })
 
-  // matchingInput es el input de busqueda
-  // filterColumn es el select de columna para buscar
-
-  // TODO: implementar la busqueda de cualquier modulo del
-  // sistema desde el elemento search utilizando la tecla '/'.
-
-
-  console.log(table.column(0).data());
-
-  /*
   function filterGlobal(table) {
-      let filter = document.querySelector('#global_filter');
-      let regex = document.querySelector('#global_regex');
-      let smart = document.querySelector('#global_smart');
-   
-      table.search(filter.value, regex.checked, smart.checked).draw();
+    console.log(matchingInput.value)
+    console.log(table);
+    table.search(matchingInput.value, false, true).draw()
   }
-  
-  function filterColumn(table, i) {
-      let filter = document.querySelector('#col' + i + '_filter');
-      let regex = document.querySelector('#col' + i + '_regex');
-      let smart = document.querySelector('#col' + i + '_smart');
-   
-      table.column(i).search(filter.value, regex.checked, smart.checked).draw();
+
+  function FfilterColumn(table, columnIndex) {
+    console.log(columnIndex)
+    table.column(columnIndex).search(matchingInput.value).draw()
   }
-  
-  let table = new DataTable('#example');
-  
-  document.querySelectorAll('input.global_filter').forEach((el) => {
-      el.addEventListener(el.type === 'text' ? 'keyup' : 'change', () =>
-          filterGlobal(table)
-      );
-  });
-  
-  document.querySelectorAll('input.column_filter').forEach((el) => {
-      let tr = el.closest('tr');
-      let columnIndex = tr.getAttribute('data-column');
-   
-      el.addEventListener(el.type === 'text' ? 'keyup' : 'change', () =>
-          filterColumn(table, columnIndex)
-      );
-  });
-  */
+
+  let legacyInput = document.querySelector('.dt-layout-row');
+  legacyInput.style.display = 'none';
+
 </script>
