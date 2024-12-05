@@ -17,6 +17,14 @@ if (isset($_POST['modulo_usuario'])) {
     echo $insUsuario->listarUsuarioControlador();
   }
 
+  if ($_POST['modulo_usuario'] == "remover") {
+    echo $insUsuario->removerUsuarioControlador(); 
+  }
+
+  if ($_POST['modulo_usuario'] == "obtener_roles") {
+    echo $insUsuario->obtenerRoles();
+  }
+
 } else {
   session_destroy();
   header("Location: " . APP_URL . "login/");

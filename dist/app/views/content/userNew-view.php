@@ -173,7 +173,6 @@
       flex-direction: row;
       gap: var(--4, .5rem);
     }
-
   </style>
   <div class="body-container">
     <div class="container">
@@ -227,6 +226,10 @@
             </div>
           </div>
 
+          <?php
+          // realizar consulta de los roles disponibles a la base de datos desde la tabla 
+          ?>
+
           <!-- correo y rol -->
           <div class="row-layout">
             <div class="input-field">
@@ -237,8 +240,6 @@
               <label for="rol" class="file-label">Rol</label>
               <select name="rol" id="rol" class="input">
                 <option value="" selected>Selecciona un rol</option>
-                <option value="1">Administrador</option>
-                <option value="2">Usuario</option>
               </select>
             </div>
           </div>
@@ -274,3 +275,22 @@
       </div>
     </div>
   </div>
+  <script>
+    // hacer fetch de los roles disponibles
+    fetch("<?php echo APP_URL; ?>app/ajax/usuarioAjax.php", {
+        method: "POST",
+        body: new URLSearchParams("modulo_usuario=obtener_roles")
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        const select = document.getElementById("rol");
+        data.forEach(rol => {
+          const option = document.createElement("option");
+          option.value = rol.rol_id;
+          option.textContent = rol.rol_descripcion;
+          select.appendChild(option);
+        });
+      })
+      .catch(error => console.error(error));
+  </script>

@@ -191,7 +191,12 @@
       </button>
       <div id="info-container">
         <img src="<?php echo APP_URL; ?>app/views/img/logotipo-neurodesarrollo.png" alt="" class="logo">
-        <span id="page-name"> Panel Principal </span>
+        <?php
+        $current_url = $_SERVER['REQUEST_URI'];
+        $last_segment = basename($current_url);
+        $page_name = ($last_segment === 'dashboard') ? 'Página principal' : ($_SESSION['nombre'] ? : 'Invitado');
+        ?>
+        <span id="page-name"><?php echo $page_name; ?></span>
       </div>
     </div>
     <div id="right-side">
@@ -301,7 +306,6 @@
 </div>
 </div>
 
-<!-- script -->
 <script>
   const menuButton = document.getElementById("left-menu");
   const closeButton = document.getElementById("left-closeButton");

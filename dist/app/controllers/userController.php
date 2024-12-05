@@ -89,7 +89,7 @@ class userController extends mainModel
       exit();
     }
 
-    # nombre de usuario no se verifica correctamente por alguna razon
+    # TODO: nombre de usuario no se verifica correctamente por alguna razón del lado del servidor
     // if ($this->verificarDatos("[a-zA-Z0-9._@!#$%^&*+\-]{3,70}", $datosUsuario['username'])) {
     //   $alerta = [
     //     "tipo" => "simple",
@@ -325,16 +325,25 @@ class userController extends mainModel
     return json_encode($alerta);
   }
 
-  # controlador para listar usuarios devuelve
-  # un json con los datos de los usuarios
   public function listarUsuarioControlador()
   {
-    /* los campos de la tabla deben ser NO, NOMBRE COMPLETO, 
-NOMBRE DE USUARIO, CORREO, ESTADO, ROL y ACCIONES */
-
-    $query = "SELECT usuario_id, usuario_nombre, usuario_apellido_materno, usuario_apellido_paterno, usuario_usuario, usuario_email, usuario_estado, usuario_rol FROM usuario";
+    # controlador para listar usuario
+    $query = "SELECT u.usuario_id, u.usuario_nombre, u.usuario_apellido_materno, u.usuario_apellido_paterno, u.usuario_usuario, u.usuario_email, r.rol_descripcion, u.usuario_estado FROM usuario u JOIN rol r ON usuario_rol = rol_id";
     $listar_usuarios = $this->ejecutarConsulta($query);
 
     return json_encode($listar_usuarios->fetchAll());
+  }
+
+  public function obtenerRoles()
+  {
+    # controlador para devolver los roles disponibles para ser indexados en el registro de usuarios
+    $query = "SELECT rol_id, rol_descripcion FROM rol WHERE rol_estado = 1";
+    $roles = $this->ejecutarConsulta($query);
+
+    return json_encode($roles->fetchAll());
+  }
+
+  public function removerusuarioControlador() {
+
   }
 }
