@@ -245,6 +245,33 @@ y 3 botoncitos para cambiar el estado o el rol -->
     padding: 0.5rem 1rem;
   }
 
+  .input-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  #matchingInput {
+    padding-right: 24px;
+    /* Espacio para el botón de limpiar */
+  }
+
+  .clear-button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #aaa;
+    display: none;
+    /* Ocultar por defecto */
+  }
+
+  .input-container input:focus+.clear-button,
+  .input-container input:not(:placeholder-shown)+.clear-button {
+    display: inline;
+    /* Mostrar cuando el input tiene texto */
+  }
 </style>
 <div class="container">
   <div class=" navigation">
@@ -285,8 +312,10 @@ y 3 botoncitos para cambiar el estado o el rol -->
               <option value="4">Estado</option>
               <option value="5">Rol</option>
             </select>
-            <input type="text" name="matchingColumn" id="matchingInput" placeholder="Buscar">
-
+            <div class="input-container">
+              <input type="text" name="matchingColumn" id="matchingInput" placeholder="Buscar">
+              <span class="clear-button">×</span>
+            </div>
           </form>
 
           <button class="action_create_new" onclick="goTo('userNew')">Nuevo</button>
@@ -322,8 +351,10 @@ y 3 botoncitos para cambiar el estado o el rol -->
       buttomEnd: null
     },
     language: {
+      "zeroRecords": "No se encontraron registros",
       "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
       "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+      "infoFiltered": "(filtrado de _MAX_ registros totales)",
     }
   });
 
@@ -368,39 +399,61 @@ y 3 botoncitos para cambiar el estado o el rol -->
       });
   })();
 
-  // TODO: implementar la busqueda de cualquier modulo del sistema desde el elemento search utilizando la tecla '/'
-
   let matchingInput = document.getElementById('matchingInput');
+  let filterColumn = document.getElementById('filterColumn');
 
-  matchingInput.addEventListener('submit', (e) => {
-    e.preventDefault();
-  })
+  // Evento para el input de búsqueda
+  matchingInput.addEventListener('input', () => {
+    applyFilter();
+  });
 
-  matchingInput.addEventListener('keyup', (e) => {
+  // Evento para el cambio en el select
+  filterColumn.addEventListener('change', () => {
+    applyFilter();
+  });
 
-    let filterColumn = document.getElementById('filterColumn')
+  // Función para aplicar el filtro global o por columna
+  function applyFilter() {
+    let searchValue = matchingInput.value.trim(); // Elimina espacios en blanco
+    let columnIndex = filterColumn.value;
 
-    console.log(filterColumn.value)
-
-    if (filterColumn.value == 0) {
-      filterGlobal(table);
+    if (columnIndex == 0) {
+      // Filtro global
+      table.search(searchValue, false, true).draw();
     } else {
-      FfilterColumn(table, filterColumn.value);
+      // Filtro por columna
+      table.columns().search(''); // Limpia todos los filtros de columna
+      table.column(columnIndex).search(searchValue, false, true).draw();
     }
-  })
-
-  function filterGlobal(table) {
-    console.log(matchingInput.value)
-    console.log(table);
-    table.search(matchingInput.value, false, true).draw()
   }
 
-  function FfilterColumn(table, columnIndex) {
-    console.log(columnIndex)
-    table.column(columnIndex).search(matchingInput.value).draw()
-  }
+  // se agrega el evento de click al boton de limpiar cuando el documento este cargado
+  document.addEventListener('DOMContentLoaded', function() {
 
+    const clearButton = document.querySelector('.clear-button');
+
+    /** cuando se presione el boton de limpiar*/
+    clearButton.addEventListener('click', clearInput);
+
+    function clearInput() {
+      matchingInput.value = '';
+      matchingInput.focus();
+      clearButton.style.display = 'none';
+      applyFilter();
+    }
+
+    matchingInput.addEventListener('input', () => {
+      if (matchingInput.value) {
+        clearButton.style.display = 'inline';
+      } else {
+        clearButton.style.display = 'none';
+      }
+    });
+  });
+
+  /** 
+   * Ocultar el input de busqueda de la tabla
+   */
   let legacyInput = document.querySelector('.dt-layout-row');
   legacyInput.style.display = 'none';
-
 </script>
