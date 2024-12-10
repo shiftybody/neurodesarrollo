@@ -231,7 +231,7 @@ y 3 botoncitos para cambiar el estado o el rol -->
   /* ultimo td de un tr */
   td:last-child {
     display: flex;
-    justify-content: space-around;
+    gap: 0.4rem;
   }
 
   /* botton con el atributo bottom y clase editar*/
@@ -377,7 +377,9 @@ y 3 botoncitos para cambiar el estado o el rol -->
     body: data
   };
 
-  (function loadData() {
+  loadData();
+
+  function loadData() {
     let incremental = 1;
     fetch('../app/ajax/usuarioAjax.php', config)
       .then(response => response.json())
@@ -391,19 +393,19 @@ y 3 botoncitos para cambiar el estado o el rol -->
             item.usuario_email,
             item.rol_descripcion,
             item.usuario_estado === "1" ? 'activo' : 'inactivo',
-            `<button type="button" class="editar">
+            `<button type="button" class="editar" onClick="actualizar(${item.usuario_id})">
               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-pencil"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" /><path d="M13.5 6.5l4 4" /></svg>
             </button>
             <button type="button" class="remover" onClick="remover(${item.usuario_id})">
               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
             </button> 
-            <button type="button" class="opciones">
+            <button type="button" class="opciones" onClick="mostrarOpciones($item.usuario_id)">
               <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-dots-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
             </button>`
           ]).draw()
         });
       });
-  })();
+  }
 
   let filter_form = document.getElementById('filter_form');
 
@@ -479,29 +481,31 @@ y 3 botoncitos para cambiar el estado o el rol -->
     });
   });
 
-  /** 
-   * Ocultar el input de busqueda de la tabla
-   */
   let legacyInput = document.querySelector('.dt-layout-row');
   legacyInput.style.display = 'none';
 
-  // funcion para escuchar cuando un botón con clase remover sea precionado
   function remover(usuario_id) {
-
-    let params = new URLSearchParams({
-      "modulo_usuario": "obtener_roles",
+    const params = new URLSearchParams({
+      "modulo_usuario": "remover",
       "usuario_id": usuario_id
     });
 
     fetch("<?php echo APP_URL; ?>app/ajax/usuarioAjax.php", {
         method: "POST",
-        // agregar modulo_usuario=remover y usaurio_id=usuario_id
         body: params
       })
       .then(response => response.json())
       .then(data => {
         console.log(data);
+        // volver a cargar la tabla
+        table.clear();
+        loadData();
       })
       .catch(error => console.error(error));
   }
+
+  function actualizar(usuario_id) {
+    window.location.href = `<?php echo APP_URL; ?>userUpdate/${usuario_id}`;
+  }
+
 </script>

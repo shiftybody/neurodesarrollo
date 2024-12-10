@@ -27,5 +27,5 @@ if (isset($_POST['modulo_usuario'])) {
 
 } else {
   session_destroy();
-  header("Location: " . APP_URL . "login/");
+  header("Location: " . APP_URL . "login");
 }

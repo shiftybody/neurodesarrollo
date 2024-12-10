@@ -345,5 +345,25 @@ class userController extends mainModel
 
   public function removerusuarioControlador() {
 
+    $id = $this->limpiarCadena($_POST['usuario_id']);
+    $query = "DELETE FROM usuario WHERE usuario_id = :id";
+    $remover_usuario = $this->ejecutarConsulta($query, [':id' => $id]);
+
+    if ($remover_usuario->rowCount() == 1) {
+      $alerta = [
+        "tipo" => "recargar",
+        "titulo" => "Exito",
+        "texto" => "Usuario eliminado",
+        "icono" => "success"
+      ];
+    } else {
+      $alerta = [
+        "tipo" => "simple",
+        "titulo" => "Error",
+        "texto" => "No se pudo eliminar el usuario",
+        "icono" => "error"
+      ];
+    }
+    return json_encode($alerta);
   }
 }
