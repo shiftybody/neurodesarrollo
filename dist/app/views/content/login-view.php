@@ -153,7 +153,6 @@
       </form>
     </section>
   </main>
-  <script src=""></script>
   <?php
   if (isset($_POST['username']) && isset($_POST['password'])) {
     $insLogin->iniciarSesionControlador();

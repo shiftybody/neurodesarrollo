@@ -93,6 +93,25 @@ formularios.forEach(formulario => {
     // si no es valido, no hacer la peticion
     if (!isValid) return;
 
+    let method = this.getAttribute("method");
+    let action = this.getAttribute("action");
+    let encabezados = new Headers();
+    console.log(data);
+
+    let config = {
+      method: method,
+      headers: encabezados,
+      mode: 'cors',
+      cache: 'no-cache',
+      body: data
+    };
+
+    // si este formulario con id login-form
+    if (this.id === 'login-form'){
+      fetch(action, config)
+        .then(respuesta => {return respuesta.json() })
+      return;
+    }
 
     Swal.fire({
       title: '¿Estás seguro?',
@@ -105,21 +124,8 @@ formularios.forEach(formulario => {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.isConfirmed) {
-        let method = this.getAttribute("method");
-        let action = this.getAttribute("action");
-        let encabezados = new Headers();
-        console.log(data);
-
-        let config = {
-          method: method,
-          headers: encabezados,
-          mode: 'cors',
-          cache: 'no-cache',
-          body: data
-        };
-
         fetch(action, config)
-          .then(respuesta => { console.log(respuesta); return respuesta.json() })
+          .then(respuesta => {return respuesta.json() })
           .then(respuesta => {
             return alertas_ajax(respuesta);
         });

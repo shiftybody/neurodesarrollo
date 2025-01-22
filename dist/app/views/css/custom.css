@@ -1,96 +1,99 @@
-/* Use the layout | layout-style | content-style order to set rules for a element */
+:root {
+  /* Common typography styles */
+  --font-family: Inter, sans-serif;
+  --font-size-small: 14px;
+  --font-size-large: 24px;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --line-height-small: 125%;
+  --line-height-large: 150%;
+
+  /* Common colors */
+  --gray-900: color(display-p3 0.0667 0.098 0.1569);
+  --gray-300: color(display-p3 0.8196 0.8353 0.8588);
+  --gray-50: color(display-p3 0.9765 0.9804 0.9843);
+  --red-600: color(display-p3 0.8784 0.1412 0.1412);
+  --red-500: color(display-p3 0.9412 0.3216 0.3216);
+  --red-50: color(display-p3 0.9922 0.949 0.949);
+  --white: color(display-p3 1 1 1);
+  --black: #000;
+
+  /* Common spacings and radii */
+  --spacing-small: 10px;
+  --spacing-medium: 12px;
+  --spacing-large: 16px;
+  --rounded-lg: 8px;
+}
+
 h1 {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-family: Inter;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%;
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-large);
   letter-spacing: -0.24px;
 }
 
 p {
   display: flex;
   text-align: center;
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
-  color: #677283;
-  /* padding: 0 1rem; */
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-large);
+  color: var(--gray-900);
 }
 
 label {
   align-self: stretch;
-  color: var(--gray-900, var(--gray-900, #0C192A));
-  color: var(--gray-900, var(--gray-900, color(display-p3 0.0667 0.098 0.1569)));
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%;
+  color: var(--gray-900);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-large);
 }
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 125%;
-  display: flex;
-  height: 2.625rem;
-  padding: var(--3, 12px) var(--4, 16px);
-  align-items: center;
-  gap: var(--25, 10px);
-  align-self: stretch;
-  border-radius: var(--rounded-lg, 8px);
-  border: 1px solid var(--gray-300, #CFD5DD);
-  border: 1px solid var(--gray-300, color(display-p3 0.8196 0.8353 0.8588));
-  background: var(--gray-50, #F9FAFB);
-  background: var(--gray-50, color(display-p3 0.9765 0.9804 0.9843));
-}
-
+input[type="email"],
 select {
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 125%;
   display: flex;
+  font-family: var(--font-family);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-small);
   height: 2.625rem;
-  padding: var(--3, 12px) var(--4, 16px);
+  padding: var(--spacing-medium) var(--spacing-large);
   align-items: center;
-  gap: var(--25, 10px);
+  gap: var(--spacing-small);
   align-self: stretch;
-  border-radius: var(--rounded-lg, 8px);
-  border: 1px solid var(--gray-300, #CFD5DD);
-  border: 1px solid var(--gray-300, color(display-p3 0.8196 0.8353 0.8588));
-  background: var(--gray-50, #F9FAFB);
-  background: var(--gray-50, color(display-p3 0.9765 0.9804 0.9843));
+  border-radius: var(--rounded-lg);
+  border: 1px solid var(--gray-300);
+  background: var(--gray-50);
 }
 
-
-button[type="submit"] {
+button[type="submit"],
+button[type="reset"] {
   display: flex;
-  padding: var(--25, 10px) var(--5, 20px);
+  padding: var(--spacing-small) var(--spacing-large);
   justify-content: center;
   align-items: center;
-  gap: var(--2, 8px);
-  border-radius: var(--rounded-lg, 8px);
+  gap: var(--spacing-small);
+  border-radius: var(--rounded-lg);
+  font-family: var(--font-family);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-large);
+}
+
+button[type="submit"] {
   background: #2F2F31;
-  background: color(display-p3 0.1843 0.1843 0.1922);
-  color: var(--white, #FFF);
-  color: var(--white, color(display-p3 1 1 1));
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%;
+  color: var(--white);
+}
+
+button[type="reset"] {
+  background: transparent;
+  color: var(--black);
 }
 
 button[type="button"] {
@@ -99,53 +102,31 @@ button[type="button"] {
   align-items: center;
   height: 2.625rem;
   width: 2.625rem;
-  border-radius: var(--rounded-lg, 8px);
-  border: 1px solid #d2d2d2;
-  border: 1px solid color(display-p3 0.825 0.825 0.825);
+  border-radius: var(--rounded-lg);
+  border: 1px solid var(--gray-300);
   background-color: #f2f2f2;
-  padding: .5rem;
-}
-
-button[type="reset"]{
-  display: flex;
-  padding: var(--25, 10px) var(--5, 20px);
-  justify-content: center;
-  align-items: center;
-  gap: var(--2, 8px);
-  border-radius: var(--rounded-lg, 8px);
-  background: transparent;
-  color: var(--white, #000);
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%;
+  padding: 0.5rem;
 }
 
 .closebtn {
-  background:  none !important ;
+  background: none !important;
   border: none !important;
 }
 
 .error-message {
-  color: var(--red-600, var(--red-600, #F00));
-  color: var(--red-600, var(--red-600, color(display-p3 0.8784 0.1412 0.1412)));
-  /* text-sm/font-normal */
-  font-family: Inter;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
+  color: var(--red-600);
+  font-family: var(--font-family);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-large);
 }
 
 .error-input {
-  border-radius: var(--rounded-lg, 8px) !important;
-  border: 1px solid var(--red-500, #FF1C40) !important;
-  border: 1px solid var(--red-500, color(display-p3 0.9412 0.3216 0.3216)) !important;
-  background: var(--red-50, #FFF1F2) !important;
-  background: var(--red-50, color(display-p3 0.9922 0.949 0.949)) !important;
+  border-radius: var(--rounded-lg) !important;
+  border: 1px solid var(--red-500) !important;
+  background: var(--red-50) !important;
 }
 
 .error-input:hover {
-  border: 2px
+  border-width: 2px;
 }
