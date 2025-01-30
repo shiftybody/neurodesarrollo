@@ -89,18 +89,6 @@ class userController extends mainModel
       exit();
     }
 
-    # TODO: nombre de usuario no se verifica correctamente por alguna razón del lado del servidor
-    // if ($this->verificarDatos("[a-zA-Z0-9._@!#$%^&*+\-]{3,70}", $datosUsuario['username'])) {
-    //   $alerta = [
-    //     "tipo" => "simple",
-    //     "titulo" => "Error en el nombre de usuario",
-    //     "texto" => "Solo se permiten letras, numeros y los caracteres especiales . _ @ ! # $ % ^ & * + - en el nombre de usuario",
-    //     "icono" => "error"
-    //   ];
-    //   return json_encode($alerta);
-    //   exit();
-    // }
-
     if ($this->verificarDatos("(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}", $datosUsuario['pass'])) {
       $alerta = [
         "tipo" => "simple",
